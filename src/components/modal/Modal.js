@@ -3,12 +3,9 @@ import "./modal.css";
 import metamask from "../../img/metamask.png";
 import keplr from "../../img/keplr.png";
 import {
-    contractABI,
-    contractAddress,
     chainID,
   } from "../utils/constants";
 import { ethers } from "ethers";
-import { shortenAddress } from "../utils/trauncate";
   
 
 
@@ -269,7 +266,8 @@ export default function Modal(props) {
       
         const accounts = await sendingSigner.getAccounts();
         console.log(accounts);
-        props.setAddress(accounts);
+        console.log(accounts[0].address);
+        props.setSeiAddress(accounts[0].address);
         props.setModal(false);
         props.setKwp(true);
         props.setmetamaskl(true);

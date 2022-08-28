@@ -50,21 +50,21 @@ export default function Nav(props) {
               { props.kep && props.metamaskl ?
 
               <div className='containlogoconnect'>
-                <img className='logoimg' src={metamask} />  
-                <img className='logoimg' src={keplr} /> 
+                <img className='logoimgmetamask' src={metamask} />  
+                <img className='logoimgkeplr' src={keplr} /> 
               </div>
 
               : !props.kep && props.metamaskl ?
 
               <div className='containlogoconnect'>
-                <img className='logoimg' src={metamask} />
+                <img className='logoimgmetamask' src={metamask} />
                 Add extra 
               </div>
 
               : props.kep && !props.metamaskl ?
 
               <div className='containlogoconnect'>
-                <img className='logoimg' src={keplr} />
+                <img className='logoimgkeplr' src={keplr} />
                 Add extra 
               </div>
 

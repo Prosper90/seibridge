@@ -8,6 +8,7 @@ import Modal from './components/modal/Modal';
 function App() {
 
   const [address, setAddress] = useState("");
+  const [seiaddress, setSeiAddress] = useState("");
   const [provider, setProvider] = useState({});
   const [modal, setModal] = useState(false);
   const [metamaskl, setmetamaskl] = useState(false);
@@ -32,7 +33,7 @@ function App() {
           metamaskl={metamaskl}
           kep={kep}
           />
-          <Maincontent address={address} setAddress={setAddress}  provider={provider} setProvider={setProvider} />
+          <Maincontent address={address} setAddress={setAddress}  provider={provider} setProvider={setProvider} seiaddress={seiaddress} />
           <Footer />
 
           { modal && <Modal 
@@ -44,6 +45,7 @@ function App() {
           setModal={setModal}
           setmetamaskl={setmetamaskl}
           setKwp={setKwp}
+          setSeiAddress={setSeiAddress}
            />}
        
 

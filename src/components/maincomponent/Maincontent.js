@@ -1,73 +1,82 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react';
 import "./maincontent.css";
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 import { ethers } from 'ethers';
+import {EthereumGateway, contractABI, aUSDCaddress, gateABI} from "../utils/constants";
+import Notification from "../notification/Notification";
+
 
 
 
 export default function Maincontent(props) {
 
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [severity, setSeverity] = useState("");
+  const [open, setOpen] = useState(false);
 
+  
 
+  const bridge = async (e) => {
 
+    e.preventDefault();
+    const sendamount = e.target.transfer.value;
 
-
-  /*
-
-  const bridge = async () => {
-
-
-    const Gateway = require('../../artifacts/@axelar-network/axelar-cgp-solidity/contracts/interfaces/IAxelarGateway.sol/IAxelarGateway.json');
-    const IERC20 = require('../../artifacts/@axelar-network/axelar-cgp-solidity/contracts/interfaces/IERC20.sol/IERC20.json');
-
-    const args = options.args || [];
-    const source = chains.find((chain) => chain.name == (args[0] || 'Avalanche'));
-    const destination = chains.find((chain) => chain.name == (args[1] || 'Fantom'));
-    const amount = args[2] || 10e6;
-    const destinationAddress = args[3] || wallet.address;
-    const symbol = 'aUSDC';
-
-
-
-
-
-    const provider = getDefaultProvider(chain.rpc);
-    chain.wallet = wallet.connect(provider);
-    chain.contract = new Contract(chain.gateway, Gateway.abi, chain.wallet);
-    const tokenAddress = await chain.contract.tokenAddresses(symbol);
-    chain.token = new Contract(tokenAddress, IERC20.abi, chain.wallet);
-
-
-
-
-
-
-    const balance = await destination.token.balanceOf(destinationAddress);
-    console.log('--- Initially ---');
-    await print();
-
-    await (await source.token.approve(source.gateway, amount)).wait();
-
-    await (await source.contract.sendToken(destination.name, destinationAddress, symbol, amount)).wait();
-    while (true) {
-        const newBalance = await destination.token.balanceOf(destinationAddress);
-        if (BigInt(balance) != BigInt(newBalance)) break;
-        await sleep(2000);
+    if(sendamount === "") {
+      setOpen(true);
+      setSeverity("warning");
+      setNotificationMessage("invalid amount");
     }
 
-    console.log('--- After ---');
-    await print();
 
+
+    console.log(sendamount);
+
+
+
+    const signer = props.provider.getSigner();
+
+    const Tokeninstance = new ethers.Contract(
+      aUSDCaddress,
+      contractABI,
+      signer
+    );
+
+
+    const Gatewayinstance = new ethers.Contract(
+      aUSDCaddress,
+      gateABI,
+      signer
+    );
+
+
+    await Tokeninstance.approve(EthereumGateway, ethers.utils.parseEther(sendamount));
+
+    await Gatewayinstance.sendToken( "SEI", props.seiaddress,  "SEI",  ethers.utils.parseEther(sendamount) ) ;
+
+
+   console.log("success");
+   setOpen(true);
+   setSeverity("success");
+   setNotificationMessage("Token Sent");
 
   }
 
-*/
+
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
 
 
 
 
   return (
-    <form className='maincontent-container' > 
+    <form className='maincontent-container' onSubmit={bridge}> 
 
       <h6 className='header'>Bridge</h6>
 
@@ -75,7 +84,7 @@ export default function Maincontent(props) {
 
             <div className='top-layer'>from : ETH</div>
             <div className="inputform" >
-                 <input  className="input" placeholder="0.0"  />ETH
+                 <input name="transfer"  className="input" placeholder="0.0"  />ETH
             </div>
         
       </div>
@@ -86,7 +95,7 @@ export default function Maincontent(props) {
 
           <div className='top-layer' >To : SEI</div>
           <div className="inputform" >
-              <input  className="input" placeholder="0.0"  />SEI
+              <input name="recieve"  className="input" placeholder="0.0"  />SEI
           </div>
 
       </div>
@@ -97,6 +106,8 @@ export default function Maincontent(props) {
        </div>
 
 
+   
+       <Notification open={open} handleClose={handleClose} severity={severity} notificationMessage={notificationMessage} />
 
     </form>
   )

@@ -63,11 +63,19 @@
 
 .containlogoconnect {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 
-.logoimg {
+
+.logoimgmetamask {
     width: 30%;
+    height: auto;
+}
+
+
+
+.logoimgkeplr {
+    width: 20%;
     height: auto;
 }
