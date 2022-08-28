@@ -58,3 +58,16 @@
     align-items: center;
     cursor: pointer;
 }
+
+
+
+.containlogoconnect {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.logoimg {
+    width: 30%;
+    height: auto;
+}

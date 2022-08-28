@@ -2,11 +2,9 @@ import abi from "./ABI.json";
 import tABI from "./TokenABI.json";
 import pancakeABI from "./pancake.json";
 import pancakeFactory from "./pancakeFactory.json"
-import { connectKeplr } from "./connectKeplr";
 
 export const contractAddress = "0xb0C534a478eA73A08d08Fb8DC9Eb47AB6C12e982";
 export const contractABI = abi;
-export const keplr = connectKeplr;
 //export const tokenABI = tABI;
 //export const pancakeABIuse = pancakeABI;
 //export const pancakeFactoryuse = pancakeFactory;

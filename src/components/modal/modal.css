@@ -1,0 +1,42 @@
+.modal-container {
+    width: 100%;
+    height: 100%;
+    /* background: green; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background: rgb(0, 0, 0, 0.6);
+}
+
+
+.main-contain {
+    background: #252838;
+    width: 50%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+
+.metamask img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+
+
+.kepler img {
+    width: 67%;
+    height: auto;
+    cursor: pointer;
+}
+
+
+.cancel {
+    color: #FFFFFF;
+    padding: 0 28px 208px 0;
+    cursor: pointer;
+}
