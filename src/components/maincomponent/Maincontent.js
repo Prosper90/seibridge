@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import "./maincontent.css";
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 import { ethers } from 'ethers';
-import {EthereumGateway, contractABI, aUSDCaddress, gateABI} from "../utils/constants";
+import {EthereumGateway, contractABI, aUSDCaddress, gateABI, attachContract} from "../utils/constants";
 import Notification from "../notification/Notification";
 
 
@@ -30,7 +30,11 @@ export default function Maincontent(props) {
 
 
     console.log(sendamount);
-
+    console.log(EthereumGateway);
+    console.log(attachContract);
+    console.log(String(props.seiaddress));
+    const seiadd = props.seiaddress.toString();
+    console.log(seiadd);
 
 
     const signer = props.provider.getSigner();
@@ -43,21 +47,46 @@ export default function Maincontent(props) {
 
 
     const Gatewayinstance = new ethers.Contract(
-      aUSDCaddress,
+      EthereumGateway,
       gateABI,
       signer
     );
 
+    //const callsend = await Gatewayinstance.attach(attachContract);
+
 
     await Tokeninstance.approve(EthereumGateway, ethers.utils.parseEther(sendamount));
 
-    await Gatewayinstance.sendToken( "SEI", props.seiaddress,  "SEI",  ethers.utils.parseEther(sendamount) ) ;
 
 
-   console.log("success");
-   setOpen(true);
-   setSeverity("success");
-   setNotificationMessage("Token Sent");
+   console.log("not this one here");
+ 
+
+
+
+    setTimeout( async function () {
+
+      await Gatewayinstance.sendToken( "SEI", String(props.seiaddress), "aUSDC", ethers.utils.parseEther(sendamount), {
+        gasLimit: 300000,
+        nonce: 100 || undefined,
+      } ) ;
+
+      console.log(Gatewayinstance.hash);
+      console.log("We Don Reach oooo");
+
+      console.log("success");
+      setOpen(true);
+      setSeverity("success");
+      setNotificationMessage("Token Sent");
+
+
+  },45000);
+
+
+
+
+
+
 
   }
 

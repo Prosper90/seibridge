@@ -183,7 +183,7 @@ export default function Modal(props) {
         const prefix = "sei";
         try {
           await window.keplr.experimentalSuggestChain({
-            chainIds: chainIdInput,
+            chainId: chainIdInput,
             chainName: chainNameInput,
             rpc: rpcUrl,
             rest: restUrl,
@@ -251,7 +251,7 @@ export default function Modal(props) {
               coinDecimals: 6,
             },
             coinType: 118,
-            features: ["ibc-transfer", "cosmwasm"],
+            features: ["stargate", "ibc-transfer", "cosmwasm"],
           });
         } catch {
           alert("Failed to suggest the chain");
